@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta charset="UTF-8">
+
+<link rel="stylesheet" href="Tinnitus_files/player.css">
+
+<link href="Tinnitus_files/css_002.css" rel="stylesheet" type="text/css">
+<link href="Tinnitus_files/css.css" rel="stylesheet" type="text/css">
+<link href="Tinnitus_files/font-awesome.css" rel="stylesheet">
+	
+</head><body>
+    
+        <title>Tinnitus</title>
+    
+    
+        <script type="text/javascript">
+            function play(id){
+
+                audio = document.getElementById("audio_player");
+                file = document.getElementById(id.concat(" file")).innerHTML;
+                button = document.getElementById("play");
+
+                button.setAttribute('class', "icon-pause btn")
+                button.setAttribute('onclick', "pause()")
+
+                document.getElementById("player_title").innerHTML = id;
+
+                var progress = document.getElementById("progress")
+                var duration = audio.duration
+
+                progress.style["-webkit-animation-duration"] = "playing " + duration + "s";
+                progress.style["-moz-animation"] = "playing " + duration + "s";
+                progress.style["-o-animation"] = "playing " + duration + "s";
+                progress.style["animation"] = "playing " + duration + "s";
+                
+                audio.setAttribute('src', file)
+                audio.load()
+                audio.play()
+            }
+
+            function pause(){
+                audio = document.getElementById("audio_player")
+                button = document.getElementById("play");
+                button.setAttribute('class', "icon-play btn")
+                button.setAttribute('onclick', "unpause()")
+                audio.pause()
+            }
+
+            function unpause(){
+                audio = document.getElementById("audio_player")
+                button = document.getElementById("play");
+                button.setAttribute('class', "icon-pause btn")
+                button.setAttribute('onclick', "pause()")
+                audio.play()
+            }
+
+        </script>
+
+        <audio id="audio_player" src="Tinnitus_files/white_noise.mp3"></audio>
+        <script src="Tinnitus_files/audio.js"></script>
+
+        <section class="player">
+            <div class="current_title">
+                <h2 id="player_title">Green and Pink Noise</h2>
+
+            <div class="controls">
+                <button id="play" onclick="pause()" class="icon-pause btn"></button></div>
+            </div>
+        </section>
+
+        
+        <div class="song_table">
+            <table>
+                <tbody><tr id="headings">
+                    <th></th>
+                    <th>Track Title</th>
+                    <th>Category</th>
+                    <th>Artist</th>
+                </tr>
+                
+                <tr>
+                    <td><button id="Fire" onclick="play(this.id);">▶</button></td>
+                    <td id="Fire title">Fire</td>
+                    <td id="Fire category">Shielding and Distruption</td>
+                    <td id="Fire artist">Rupert Brown</td>
+                    <td id="Fire file" hidden="">/static/audio/1FireMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Water" onclick="play(this.id);">▶</button></td>
+                    <td id="Water title">Water</td>
+                    <td id="Water category">Shielding and Distruption</td>
+                    <td id="Water artist">Rupert Brown</td>
+                    <td id="Water file" hidden="">/static/audio/2WaterMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Air" onclick="play(this.id);">▶</button></td>
+                    <td id="Air title">Air</td>
+                    <td id="Air category">Shielding and Distruption</td>
+                    <td id="Air artist">Rupert Brown</td>
+                    <td id="Air file" hidden="">/static/audio/3AirMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Earth" onclick="play(this.id);">▶</button></td>
+                    <td id="Earth title">Earth</td>
+                    <td id="Earth category">Shielding and Distruption</td>
+                    <td id="Earth artist">Rupert Brown</td>
+                    <td id="Earth file" hidden="">/static/audio/4EarthMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Metal" onclick="play(this.id);">▶</button></td>
+                    <td id="Metal title">Metal</td>
+                    <td id="Metal category">Shielding and Distruption</td>
+                    <td id="Metal artist">Rupert Brown</td>
+                    <td id="Metal file" hidden="">/static/audio/5MetalMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Bamboo Gardens" onclick="play(this.id);">▶</button></td>
+                    <td id="Bamboo Gardens title">Bamboo Gardens</td>
+                    <td id="Bamboo Gardens category">Shielding and Distruption</td>
+                    <td id="Bamboo Gardens artist">Rupert Brown</td>
+                    <td id="Bamboo Gardens file" hidden="">/static/audio/6BambooGardensMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Pink Noise Static and Crickets" onclick="play(this.id);">▶</button></td>
+                    <td id="Pink Noise Static and Crickets title">Pink Noise Static and Crickets</td>
+                    <td id="Pink Noise Static and Crickets category">Shielding and Distruption</td>
+                    <td id="Pink Noise Static and Crickets artist">Rupert Brown</td>
+                    <td id="Pink Noise Static and Crickets file" hidden="">/static/audio/7PinkNoiseStaticandCricketsMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Summer Holiday" onclick="play(this.id);">▶</button></td>
+                    <td id="Summer Holiday title">Summer Holiday</td>
+                    <td id="Summer Holiday category">Shielding and Distruption</td>
+                    <td id="Summer Holiday artist">Rupert Brown</td>
+                    <td id="Summer Holiday file" hidden="">/static/audio/8SummerVacationMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Warm Fire by the Ocean" onclick="play(this.id);">▶</button></td>
+                    <td id="Warm Fire by the Ocean title">Warm Fire by the Ocean</td>
+                    <td id="Warm Fire by the Ocean category">Shielding and Distruption</td>
+                    <td id="Warm Fire by the Ocean artist">Rupert Brown</td>
+                    <td id="Warm Fire by the Ocean file" hidden="">/static/audio/9WarmFirebytheOceanMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Meditation" onclick="play(this.id);">▶</button></td>
+                    <td id="Meditation title">Meditation</td>
+                    <td id="Meditation category">Shielding and Distruption</td>
+                    <td id="Meditation artist">Rupert Brown</td>
+                    <td id="Meditation file" hidden="">/static/audio/10MeditationMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Eastern Flower" onclick="play(this.id);">▶</button></td>
+                    <td id="Eastern Flower title">Eastern Flower</td>
+                    <td id="Eastern Flower category">Shielding and Distruption</td>
+                    <td id="Eastern Flower artist">Rupert Brown</td>
+                    <td id="Eastern Flower file" hidden="">/static/audio/11EasternFlowerMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="London Tube" onclick="play(this.id);">▶</button></td>
+                    <td id="London Tube title">London Tube</td>
+                    <td id="London Tube category">Normalisation</td>
+                    <td id="London Tube artist">Rupert Brown</td>
+                    <td id="London Tube file" hidden="">/static/audio/1LondonTubeMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Piano at the Airport" onclick="play(this.id);">▶</button></td>
+                    <td id="Piano at the Airport title">Piano at the Airport</td>
+                    <td id="Piano at the Airport category">Normalisation</td>
+                    <td id="Piano at the Airport artist">Rupert Brown</td>
+                    <td id="Piano at the Airport file" hidden="">/static/audio/2PianoatAirportMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="International Train Station" onclick="play(this.id);">▶</button></td>
+                    <td id="International Train Station title">International Train Station</td>
+                    <td id="International Train Station category">Normalisation</td>
+                    <td id="International Train Station artist">Rupert Brown</td>
+                    <td id="International Train Station file" hidden="">/static/audio/3InternationalTrainStationMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Targeted Frequencies" onclick="play(this.id);">▶</button></td>
+                    <td id="Targeted Frequencies title">Targeted Frequencies</td>
+                    <td id="Targeted Frequencies category">Normalisation</td>
+                    <td id="Targeted Frequencies artist">Rupert Brown</td>
+                    <td id="Targeted Frequencies file" hidden="">/static/audio/4TargetedFrequenciesMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Antibes Train Station" onclick="play(this.id);">▶</button></td>
+                    <td id="Antibes Train Station title">Antibes Train Station</td>
+                    <td id="Antibes Train Station category">Normalisation</td>
+                    <td id="Antibes Train Station artist">Rupert Brown</td>
+                    <td id="Antibes Train Station file" hidden="">/static/audio/5AntibesTrainStationMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Zen Tones" onclick="play(this.id);">▶</button></td>
+                    <td id="Zen Tones title">Zen Tones</td>
+                    <td id="Zen Tones category">Tailored Tones</td>
+                    <td id="Zen Tones artist">Rupert Brown</td>
+                    <td id="Zen Tones file" hidden="">/static/audio/1ZenStyleTonesMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Fan Sounds" onclick="play(this.id);">▶</button></td>
+                    <td id="Fan Sounds title">Fan Sounds</td>
+                    <td id="Fan Sounds category">Tailored Tones</td>
+                    <td id="Fan Sounds artist">Rupert Brown</td>
+                    <td id="Fan Sounds file" hidden="">/static/audio/2FanSoundsMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Green and Pink Noise" onclick="play(this.id);">▶</button></td>
+                    <td id="Green and Pink Noise title">Green and Pink Noise</td>
+                    <td id="Green and Pink Noise category">Tailored Tones</td>
+                    <td id="Green and Pink Noise artist">Rupert Brown</td>
+                    <td id="Green and Pink Noise file" hidden="">/static/audio/3GreenandPinkNoiseMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Goa Coloured Noise" onclick="play(this.id);">▶</button></td>
+                    <td id="Goa Coloured Noise title">Goa Coloured Noise</td>
+                    <td id="Goa Coloured Noise category">Tailored Tones</td>
+                    <td id="Goa Coloured Noise artist">Rupert Brown</td>
+                    <td id="Goa Coloured Noise file" hidden="">/static/audio/4GoaColouredNoisesMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="White Noise" onclick="play(this.id);">▶</button></td>
+                    <td id="White Noise title">White Noise</td>
+                    <td id="White Noise category">Tailored Tones</td>
+                    <td id="White Noise artist">Rupert Brown</td>
+                    <td id="White Noise file" hidden="">/static/audio/5WhiteNoiseMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Forest of Dreams" onclick="play(this.id);">▶</button></td>
+                    <td id="Forest of Dreams title">Forest of Dreams</td>
+                    <td id="Forest of Dreams category">Tailored Tones</td>
+                    <td id="Forest of Dreams artist">Rupert Brown</td>
+                    <td id="Forest of Dreams file" hidden="">/static/audio/6ForestofDreamsMastered.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Letting Go" onclick="play(this.id);">▶</button></td>
+                    <td id="Letting Go title">Letting Go</td>
+                    <td id="Letting Go category">Guided Introspections</td>
+                    <td id="Letting Go artist">Rupert Brown</td>
+                    <td id="Letting Go file" hidden="">/static/audio/1LettingGo.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Embracing Kindness" onclick="play(this.id);">▶</button></td>
+                    <td id="Embracing Kindness title">Embracing Kindness</td>
+                    <td id="Embracing Kindness category">Guided Introspections</td>
+                    <td id="Embracing Kindness artist">Rupert Brown</td>
+                    <td id="Embracing Kindness file" hidden="">/static/audio/2EmbracingKindness.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Gentle Presence" onclick="play(this.id);">▶</button></td>
+                    <td id="Gentle Presence title">Gentle Presence</td>
+                    <td id="Gentle Presence category">Guided Introspections</td>
+                    <td id="Gentle Presence artist">Rupert Brown</td>
+                    <td id="Gentle Presence file" hidden="">/static/audio/3GentlePresence.mp3</td>
+                </tr>
+            
+                <tr>
+                    <td><button id="Roots of Connection" onclick="play(this.id);">▶</button></td>
+                    <td id="Roots of Connection title">Roots of Connection</td>
+                    <td id="Roots of Connection category">Guided Introspections</td>
+                    <td id="Roots of Connection artist">Rupert Brown</td>
+                    <td id="Roots of Connection file" hidden="">/static/audio/4RootsofConnection.mp3</td>
+                </tr>
+            
+            </tbody></table>
+        </div>
+        
+
+        <table class="frequency">
+            <tbody><tr>
+                <th>Frequency</th>
+                <th>Volume</th>
+            </tr>
+            <tr>
+                <td><input type="range" id="fIn" min="20" max="20000" oninput="show()" onload="show()" value="20" orient="vertical"></td>
+                <td><input type="range" id="vIn" min="0" max="100" oninput="show()" onload="show()" value="50" orient="vertical"></td>
+            </tr>
+            <tr>
+                <td><span id="fOut"></span></td>
+                <td><span id="vOut"></span><br></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button id="but" onclick="beep();">▶</button></td></tr>
+            
+        </tbody></table>
+    
+</body></html>

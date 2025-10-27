@@ -1,0 +1,81 @@
+body {
+  background-color: #1abc9c;
+  font-size: 16px;
+  color: white;}
+
+.player {
+  position: absolute;
+  width: 20%;
+  left: 0%;
+  bottom: 0%;
+  height: 100%;
+  margin: auto;
+  display: block;
+  text-align: left;
+  background-color: #212b31;}
+
+  .current_title{
+    position: relative;
+    width: 100%;
+    height: 10%;
+    top: 87.5%;
+    right: 20%;
+    text-align: left;
+  }
+
+  .controls {
+    text-align: right;
+    position: relative;
+    width: 100%;
+    bottom: 60%;
+    right: 20%;
+  }
+
+.song_table {
+  background-color: #1abc9c;
+  position: relative;
+  left: 40%;
+  width: 60%;
+  text-align: center;}
+
+  .song_table table {
+    background-color: #212b31;
+    position: relative;
+    text-align: left;
+    border-color: None;}
+
+  .song_table table tr:hover td {
+    background: #1abc9c;
+    cursor: pointer;}
+
+.frequency {
+  text-align: center;
+  background-color: #212b31;
+  position: absolute;
+  height: 100%;
+  width: 10%;
+  right: 0%;
+  top: 0%}
+
+#headings {
+  text-align: center;}
+
+.play {
+  padding: 1.6em !important;}
+
+h2 {
+  font-size: 150%;
+  text-align: center;
+  font-weight: 700; 
+  position: relative;}
+
+h3 {
+  font-size: 1em;
+  font-weight: 400;
+  color: #1abc9c;; 
+  position: relative;
+  text-align: center;}
+
+.btn {
+  font-size: 1em;
+  color: #ecf0f1;}

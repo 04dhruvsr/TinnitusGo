@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+	<meta charset="UTF-8">
+
+<link rel="stylesheet" href="{% static 'css/mobile.css' %}">
+<link href="https://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+<script src="{% static 'js/audio.js' %}"></script>
+	
+</html>
+    <head>
+        <title>Go Tinnitus</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            
+            function calculateTime(secs){
+                const minutes = Math.floor(secs / 60);
+                const seconds = Math.floor(secs % 60);
+                const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+                return `${minutes}:${returnedSeconds}`;
+            }
+
+            function displayDuration(){
+                document.getElementById("duration").innerHTML = calculateTime(audio.duration);
+            }
+
+            function setSliderMax(){
+                seekSlider.max = Math.floor(audio.duration);
+            }
+
+            function whilePlaying(){
+                seekSlider.value = Math.floor(audio.currentTime);
+                currentTimeContainer.textContent = calculateTime(seekSlider.value);
+                audioPlayerContainer.style.setProperty('--seek-before-width', `${seekSlider.value / seekSlider.max * 100}%`);
+                rAF = requestAnimationFrame(whilePlaying);
+            }
+
+            function play(id){
+                let rAF = null;
+
+                audio = document.getElementById("audio_player");
+                file = document.getElementById(id.concat(" file")).innerHTML;
+                audio.setAttribute('src', file)
+                audio.load()
+                audio.play()
+
+                button = document.getElementById("play");
+                button.setAttribute('class', "icon-pause btn")
+                button.setAttribute('onclick', "pause()")
+
+                document.getElementById("player_title").innerHTML = id;
+
+                seekSlider = document.getElementById('seek-slider');
+                audio = document.querySelector('audio');
+                volSlider = document.getElementById("player_vol")
+                currentTimeContainer = document.getElementById('current-time');
+                audioPlayerContainer = document.getElementById('dur_slider');
+
+                setSliderMax();
+                requestAnimationFrame(whilePlaying);
+
+                volSlider.addEventListener('change', () => {
+                    audio.volume = volSlider.value/100;
+                });
+
+                volSlider.addEventListener('input', () => {
+                    audio.volume = volSlider.value/100;
+                });
+
+                seekSlider.addEventListener('input', () => {
+                    currentTimeContainer.textContent = calculateTime(seekSlider.value);
+                    if(!audio.paused) {
+                        cancelAnimationFrame(raf);
+                    }
+                });
+
+                seekSlider.addEventListener('change', () => {
+                    audio.currentTime = seekSlider.value;
+                    if(!audio.paused) {
+                        requestAnimationFrame(whilePlaying);
+                    }
+                });
+
+                audio.addEventListener('loadedmetadata', () => {
+                    displayDuration(audio.duration);
+                    setSliderMax();
+                });
+
+                audio.addEventListener('timeupdate', () => {
+                    seekSlider.value = Math.floor(audio.currentTime);
+                });
+            }
+
+            function pause(){
+                audio = document.getElementById("audio_player")
+                button = document.getElementById("play");
+                button.setAttribute('class', "icon-play btn")
+                button.setAttribute('onclick', "unpause()")
+                cancelAnimationFrame(rAF);
+                audio.pause()
+            }
+
+            function unpause(){
+                audio = document.getElementById("audio_player")
+                button = document.getElementById("play");
+                button.setAttribute('class', "icon-pause btn")
+                button.setAttribute('onclick', "pause()")
+                requestAnimationFrame(whilePlaying);
+                audio.play()
+            }
+
+            function volume_show(){
+                volume = document.getElementById("volume")
+                slider = document.getElementById("player_vol")
+                slider.style.visibility = 'visible';
+                volume.setAttribute('onclick', "volume_hide()")
+            }
+
+            function volume_hide(){
+                volume = document.getElementById("volume")
+                slider = document.getElementById("player_vol")
+                slider.style.visibility = 'hidden';
+                volume.setAttribute('onclick', "volume_show()")
+            }
+
+            function play_queue(id){
+                delete_row(id + " queue")
+                play(id)
+            }
+
+            function delete_row(id)  {   
+                var row = document.getElementById(id);
+                row.parentNode.removeChild(row);}
+
+            function add_queue(id){
+                var table = document.getElementById("queue");
+
+                var row = table.insertRow(0);
+                var name = row.insertCell(0);
+                var play = row.insertCell(1);
+
+                name.innerHTML = id;
+                play.innerHTML = "<button id='" + id + "'>▶</button>";
+
+                name.setAttribute('class', 'name')
+
+                row.setAttribute('id', id + " queue");
+
+                q_play = document.getElementById(id);
+                q_play.setAttribute('onclick', "play_queue(this.id)");
+
+                row.setAttribute('id', id + " queue");
+                row.setAttribute('onclick', "delete_row(this.id)");
+
+                if (document.getElementById("audio_player").src === "http://127.0.0.1:8000/"){
+                    play_queue(q_play.id)
+                }
+            }
+
+            function end(){
+                if (document.getElementById("queue").rows.length === 0){
+                    document.getElementById("audio_player").src = "http://127.0.0.1:8000/"
+                } else {
+                    play_queue(document.getElementById("queue").rows[document.getElementById("queue").rows.length - 1].cells[0].innerHTML)
+                }
+            }
+            
+            function skip(){
+                play_queue(document.getElementById("queue").rows[document.getElementById("queue").rows.length - 1].cells[0].innerHTML)
+            }
+
+            function queue_all(table){
+                var table = document.getElementById(table);
+                for (let i=1; i < table.rows.length - 1; i++){
+                    add_queue(table.rows[i].cells[0].innerHTML);
+                }
+            }
+            
+        </script>
+
+        <audio id="audio_player" src="" onended="end()"></audio>
+
+        <section class="player">
+            <div id="dur_slider">
+                <input type="range" id="seek-slider" max="100" value="0">
+                <span id="current-time" class="time">0:00</span>
+                <span id="duration" class="time">0:00</span>
+            </div>
+
+            <div id="player_label">
+                <h1>Queue</h1>
+            </div>
+
+            <table class="current_title">
+                <tr>
+                    <td id="title"><h2 id="player_title">Play a Song</h2></td>
+                    <td><button id="volume" onclick="volume_show()" class="icon-volume-off"></button></td>
+                    <td><button id="play" onclick="unpause()" class="icon-play btn"></button></td>
+                    <td><button id="forward" onclick="skip()" class="icon-forward"></button></td>  
+                    <td><input type="range" id="player_vol" min="0" max="100" value = 100/></td>
+                </tr>
+            </table>
+
+            <button class="selector" id="sel1" onclick="open_lib()">♫</button>
+            <button class="selector" id="sel2" onclick="open_freq()">Hz</button>
+        </section>
+
+        <section class="queue_box" id="q_sec">
+            <table id='queue'>
+            </table>
+        </section>
+
+        <div class="song_table">
+            <table id="SD_table">
+                <tr id="headings">
+                    <th>Shielding and Disruption</th>
+                    <th class="center" onclick="queue_all('SD_table')">+</th>
+                </tr>
+                {% for song in SD %}
+                <tr>
+                    <td id="{{ song.title }} title" onclick="play(this.innerHTML);">{{ song.title }}</td>
+                    <td id="{{ song.title }} category" class = "center" hidden>{{ song.category }}</td>
+                    <td id="{{ song.title }} file" hidden>{% static 'audio/' %}{{ song.small_file}}</td>
+                    <td class = "center" id="{{ song.title }}" onclick="add_queue(this.id)">+</td>
+                    
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td class = "center" colspan="2"><button onclick = "SD_next()">→</button></td>
+                </tr>
+            </table>
+        </div>
+
+        
+
+        <div class="song_table">
+            <table id="N_table">
+                <tr id="headings">
+                    <th>Naturalisation</th>
+                    <th class="center" onclick="queue_all('N_table')">+</th>
+                </tr>
+                {% for song in N %}
+                <tr>
+                    <td id="{{ song.title }} title" onclick="play(this.innerHTML);">{{ song.title }}</td>
+                    <td id="{{ song.title }} category" class = "center" hidden>{{ song.category }}</td>
+                    <td id="{{ song.title }} file" hidden>{% static 'audio/' %}{{ song.small_file}}</td>
+                    <td class = "center" id="{{ song.title }}" onclick="add_queue(this.id)">+</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td class = "center" colspan="2"><button onclick = "N_prev()">←</button><button onclick = "N_next()">→</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="song_table">
+            <table id="TT_table">
+                <tr id="headings">
+                    <th>Tailored Tones</th>
+                    <th class="center" onclick="queue_all('TT_table')">+</th>
+                </tr>
+                {% for song in TT %}
+                <tr>
+                    <td id="{{ song.title }} title" onclick="play(this.innerHTML);">{{ song.title }}</td>
+                    <td id="{{ song.title }} category" class = "center" hidden>{{ song.category }}</td>
+                    <td id="{{ song.title }} file" hidden>{% static 'audio/' %}{{ song.small_file}}</td>
+                    <td class = "center" id="{{ song.title }}" onclick="add_queue(this.id)">+</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td class = "center" colspan="2"><button onclick = "TT_prev()">←</button><button onclick = "TT_next()">→</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="song_table">
+            <table id="GI_table">
+                <tr id="headings">
+                    <th>Guided Introspection</th>
+                    <th class="center" onclick="queue_all('SD_table')">+</th>
+                </tr>
+                {% for song in GI %}
+                <tr>
+                    <td id="{{ song.title }} title" onclick="play(this.innerHTML);">{{ song.title }}</td>
+                    <td id="{{ song.title }} category" class = "center" hidden>{{ song.category }}</td>
+                    <td id="{{ song.title }} file" hidden>{% static 'audio/' %}{{ song.small_file}}</td>
+                    <td class = "center" id="{{ song.title }}" onclick="add_queue(this.id)">+</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td class = "center" colspan="2"><button onclick = "GI_prev()">←</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <section class="frequency" id="f_sec">
+            <div id="frequency_label">
+                <h1>Tone</h1>
+            </div>
+
+            <table>
+                <tr>
+                    <th class = "center">Pitch</th>
+                    <th class = "center">Volume</th>
+                </tr>
+                <tr>
+                    <td class = "center"><input type="range" id="fIn" min="20" max="20000" oninput="show()" onload= "show()" value = 400 orient = "vertical"/></td>
+                    <td class = "center"><input type="range" id="vIn" min="0" max="100" oninput="show()" onload = "show()" value = 50 orient = "vertical"/></td>
+                </tr>
+                <tr>
+                    <td class = "center" colspan="2"><span id="fOut"></span></td>
+                </tr>
+            </table>
+
+            <button class = "center" id="but" onclick='beep();'>▶</button>
+        </section>
+    </body>
+</html>
